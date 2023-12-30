@@ -50,7 +50,12 @@ const swaggerOptions = {
       servers: [
         {
           url: "http://localhost:5000/",
+          description: "Localhost development server"
         },
+        {
+          url: "https://blogging-platform-og12.onrender.com",
+          description: "Remote deployment on render.com"
+        }
       ],
   },
   apis: ["./routes/*.js"],
