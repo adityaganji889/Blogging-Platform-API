@@ -13,14 +13,14 @@ const getAllBlogs = async (req, res) => {
           success: true,
         });
       } else {
-        res.status(400).send({
+        res.status(404).send({
           data: null,
           message: "No blogs to display.",
           success: false,
         });
       }
     } else {
-      res.status(400).send({
+      res.status(401).send({
         data: null,
         message: "Not logged in user. Can't display blogs.",
         success: false,
@@ -47,14 +47,14 @@ const getAllBlogsByUserId = async (req, res) => {
             success: true,
           });
         } else {
-          res.status(400).send({
+          res.status(404).send({
             data: null,
             message: "No blogs to display.",
             success: false,
           });
         }
       } else {
-        res.status(400).send({
+        res.status(401).send({
           data: null,
           message: "Not logged in user. Can't display blogs.",
           success: false,
@@ -81,14 +81,14 @@ const getBlogById = async (req, res) => {
             success: true,
           });
         } else {
-          res.status(400).send({
+          res.status(404).send({
             data: null,
             message: `Blog with id : ${req.params.id} doesnot exists.`,
             success: false,
           });
         }
       } else {
-        res.status(400).send({
+        res.status(401).send({
           data: null,
           message: "Not logged in user. Can't display the requested blog.",
           success: false,
@@ -111,7 +111,7 @@ const createBlog = async (req, res) => {
         title: req.body.title
       }).populate("author");
       if (blog) {
-        res.status(400).send({
+        res.status(403).send({
           data: null,
           message: `Blog with title: ${blog.title} already exists.`,
           success: false,
@@ -135,7 +135,7 @@ const createBlog = async (req, res) => {
         }
       }
     } else {
-      res.status(400).send({
+      res.status(401).send({
         data: null,
         message: "Not logged in user. Can't display blogs.",
         success: false,
@@ -165,7 +165,7 @@ const editBlogById = async (req, res) => {
             success: true,
           });
         } else {
-          res.status(400).send({
+          res.status(404).send({
             data: null,
             message: `Blog with id : ${req.params.id} doesnot exists.`,
             success: false,
@@ -185,7 +185,7 @@ const editBlogById = async (req, res) => {
     //         success: true,
     //       });
     //     } else {
-    //       res.status(400).send({
+    //       res.status(404).send({
     //         data: null,
     //         message: `Blog with id : ${req.params.id} doesnot exists.`,
     //         success: false,
@@ -193,7 +193,7 @@ const editBlogById = async (req, res) => {
     //     }
     //   }
       else {
-        res.status(400).send({
+        res.status(401).send({
           data: null,
           message: "Not logged in user/trying to update other user blog. Can't edit the requested blog.",
           success: false,
@@ -222,7 +222,7 @@ const editBlogById = async (req, res) => {
           });
         }
         else {
-          res.status(400).send({
+          res.status(404).send({
             data: null,
             message: `Blog with id : ${req.params.id} doesnot exists.`,
             success: false,
@@ -241,7 +241,7 @@ const editBlogById = async (req, res) => {
     //       });
     //     }
     //     else {
-    //       res.status(400).send({
+    //       res.status(404).send({
     //         data: null,
     //         message: `Blog with id : ${req.params.id} doesnot exists.`,
     //         success: false,
@@ -249,7 +249,7 @@ const editBlogById = async (req, res) => {
     //     }
     //   }
       else {
-        res.status(400).send({
+        res.status(401).send({
           data: null,
           message: "Not logged in user/trying to delete other user blog. Can't delete the requested blog.",
           success: false,

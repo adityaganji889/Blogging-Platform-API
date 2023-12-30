@@ -6,7 +6,7 @@ const register = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      res.status(400).send({
+      res.status(403).send({
         data: null,
         message: `User: ${user.name} already exists.`,
         success: false,
@@ -44,7 +44,7 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      res.status(400).send({
+      res.status(403).send({
         data: null,
         message: `User: ${user.name} doesnot exists.`,
         success: false,
@@ -103,20 +103,20 @@ const updateUserRole = async (req, res) => {
           success: true,
         });
       } else if (userToUpdate._id.toString() == user._id.toString()) {
-        res.status(400).send({
+        res.status(403).send({
           data: null,
           message: `You cannot update your role yourself while logged in as admin user.`,
           success: false,
         });
       } else {
-        res.status(400).send({
+        res.status(404).send({
           data: null,
           message: `User with id : ${req.params.id} doesnot exists.`,
           success: false,
         });
       }
     } else {
-      res.status(400).send({
+      res.status(401).send({
         data: null,
         message: `Not an admin user. Can't process the request.`,
         success: false,
@@ -154,20 +154,20 @@ const updateUserById = async (req, res) => {
               });
         }
       } else if (userToUpdate._id.toString() == user._id.toString()) {
-        res.status(400).send({
+        res.status(403).send({
           data: null,
           message: `You cannot update your details yourself while logged in as admin user.`,
           success: false,
         });
       } else {
-        res.status(400).send({
+        res.status(404).send({
           data: null,
           message: `User with id : ${req.params.id} doesnot exists.`,
           success: false,
         });
       }
     } else {
-      res.status(400).send({
+      res.status(401).send({
         data: null,
         message: `Not an admin user. Can't process the request.`,
         success: false,
@@ -197,20 +197,20 @@ const deleteUserById = async (req, res) => {
           success: true,
         });
       } else if (userToDelete._id.toString() == user._id.toString()) {
-        res.status(400).send({
+        res.status(403).send({
           data: null,
           message: `You cannot delete your account yourself while logged in as admin user.`,
           success: false,
         });
       } else {
-        res.status(400).send({
+        res.status(404).send({
           data: null,
           message: `User with id : ${req.params.id} doesnot exists.`,
           success: false,
         });
       }
     } else {
-      res.status(400).send({
+      res.status(401).send({
         data: null,
         message: `Not an admin user. Can't process the request.`,
         success: false,
@@ -239,14 +239,14 @@ const getAllUsers = async(req,res) => {
             });
           } 
           else {
-            res.status(400).send({
+            res.status(404).send({
               data: null,
               message: `No users to display.`,
               success: false,
             });
           }
         } else {
-          res.status(400).send({
+          res.status(401).send({
             data: null,
             message: `Not an admin user. Can't process the request.`,
             success: false,
@@ -275,14 +275,14 @@ const getUserById = async(req,res) => {
             });
           } 
           else {
-            res.status(400).send({
+            res.status(404).send({
               data: null,
               message: `No user with id: ${userToFind._id} exists.`,
               success: false,
             });
           }
         } else {
-          res.status(400).send({
+          res.status(401).send({
             data: null,
             message: `Not an admin user. Can't process the request.`,
             success: false,
