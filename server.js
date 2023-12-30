@@ -1,0 +1,67 @@
+const express = require("express");
+const app = express();
+const path = require("path");
+const cors = require("cors");
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+require("dotenv").config({ path: "./config/.env" });
+const db = require("./config/db");
+
+const port = process.env.PORT || 5000;
+const userRoute = require("./routes/userRoutes");
+const blogRoute = require("./routes/blogRoutes");
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Blogging Platform API",
+      description:
+        "A REST API built with Express and MongoDB. This API provides CRUD Operations on Blogs and Users.",
+    },
+    // host: "localhost:5000",
+    // components: {
+    //     securitySchemes: {
+    //         Authorization: {
+    //             type: "http",
+    //             scheme: "bearer",
+    //             bearerFormat: "JWT",
+    //             value: "Bearer <JWT token here>"
+    //         }
+    //     }
+    // }
+    components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: "http",
+            scheme: "bearer",
+          },
+        },
+      },
+      security: [
+        {
+          bearerAuth: [],
+        },
+      ],
+      servers: [
+        {
+          url: "http://localhost:5000/",
+        },
+      ],
+  },
+  apis: ["./routes/*.js"],
+};
+
+app.use("/api/users", userRoute);
+app.use("/api/blogs", blogRoute);
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+app.listen(port, () => {
+  console.log(`Server is running on port: ${port}`);
+});
