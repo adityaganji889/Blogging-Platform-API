@@ -28,3 +28,6 @@ https://blogging-platform-og12.onrender.com
 
 ## Demonstration:
 
+https://github.com/adityaganji889/Blogging-Platform-API/assets/88584574/b0d1d70e-0370-4e17-845c-da6e6a8978a9
+
+
